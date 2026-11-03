@@ -31,6 +31,8 @@ function Input({
         placeholder={placeholder}
         required={required}
         disabled={disabled}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${name}-error` : undefined}
         className={`w-full rounded-lg border px-4 py-3 outline-none transition
           ${
             error
@@ -42,7 +44,10 @@ function Input({
       />
 
       {error && (
-        <p className="mt-1 text-sm text-red-600">
+        <p
+          id={`${name}-error`}
+          className="mt-1 text-sm text-red-600"
+        >
           {error}
         </p>
       )}

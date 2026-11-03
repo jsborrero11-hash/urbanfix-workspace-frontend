@@ -35,6 +35,7 @@ function Button({
       type={type}
       disabled={disabled || loading}
       onClick={onClick}
+      aria-busy={loading}
       className={buttonStyles}
     >
       {loading ? 'Procesando...' : children}

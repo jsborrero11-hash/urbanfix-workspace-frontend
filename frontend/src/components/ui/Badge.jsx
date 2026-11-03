@@ -16,14 +16,17 @@ function Badge({ status, children, className = '' }) {
     CANCELADA: 'Cancelada',
   };
 
-  const currentStatus = status?.toUpperCase();
+  const currentStatus = status?.trim().toUpperCase();
+
   const styles =
     statusStyles[currentStatus] || 'bg-gray-100 text-gray-800';
 
-  const label = children || labels[currentStatus] || status || 'Sin estado';
+  const label =
+    children || labels[currentStatus] || status || 'Sin estado';
 
   return (
     <span
+      role="status"
       className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${styles} ${className}`}
     >
       {label}
