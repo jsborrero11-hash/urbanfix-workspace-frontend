@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
 
@@ -9,6 +10,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,18 +28,41 @@ function Login() {
         password,
       });
 
+      // Validar la respuesta del servidor
+      if (!data.user || !data.token) {
+        throw new Error('La respuesta del servidor no contiene los datos necesarios.');
+      }
+
       // Guardar usuario y token en AuthContext
       login(data.user, data.token);
 
       console.log('Respuesta del servidor:', data);
 
-      alert(`Bienvenido ${data.user.name}. Login exitoso.`);
+      // Redirigir según el rol del usuario
+      switch (data.user.role) {
+        case 'CLIENTE':
+          navigate('/cliente', { replace: true });
+          break;
+
+        case 'TECNICO':
+          navigate('/tecnico', { replace: true });
+          break;
+
+        case 'ADMIN':
+          navigate('/admin', { replace: true });
+          break;
+
+        default:
+          alert('El usuario tiene un rol no válido.');
+          break;
+      }
 
     } catch (error) {
       console.error('Error en el Login:', error);
 
       alert(
         error.response?.data?.message ||
+        error.message ||
         'No fue posible iniciar sesión. Intenta nuevamente.'
       );
 
