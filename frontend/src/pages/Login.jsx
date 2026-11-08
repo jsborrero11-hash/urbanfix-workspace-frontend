@@ -36,8 +36,6 @@ function Login() {
       // Guardar usuario y token en AuthContext
       login(data.user, data.token);
 
-      console.log('Respuesta del servidor:', data);
-
       // Redirigir según el rol del usuario
       switch (data.user.role) {
         case 'CLIENTE':
