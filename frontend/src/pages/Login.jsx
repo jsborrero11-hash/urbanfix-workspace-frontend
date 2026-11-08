@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
 
@@ -132,6 +132,18 @@ function Login() {
           </button>
 
         </form>
+
+        {/* Enlace para nuevos usuarios */}
+        <p className="mt-6 text-center text-sm text-gray-600">
+          ¿No tienes una cuenta?{' '}
+          <Link
+            to="/register"
+            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+          >
+            Regístrate aquí
+          </Link>
+        </p>
+
       </section>
     </main>
   );
