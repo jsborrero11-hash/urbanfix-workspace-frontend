@@ -1,9 +1,11 @@
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 // Páginas del proyecto
 import Login from './pages/Login';
+import Register from './pages/Register';
 import DashboardCliente from './pages/cliente/DashboardCliente';
 import DashboardTecnico from './pages/tecnico/DashboardTecnico';
 import DashboardAdmin from './pages/admin/DashboardAdmin';
@@ -13,25 +15,26 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Ruta Pública */}
+          {/* Rutas públicas */}
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-          {/* Ruta Protegida: SOLO para CLIENTE */}
+          {/* Ruta protegida: SOLO para CLIENTE */}
           <Route element={<ProtectedRoute allowedRoles={['CLIENTE']} />}>
             <Route path="/cliente" element={<DashboardCliente />} />
           </Route>
 
-          {/* Ruta Protegida: SOLO para TECNICO */}
+          {/* Ruta protegida: SOLO para TECNICO */}
           <Route element={<ProtectedRoute allowedRoles={['TECNICO']} />}>
             <Route path="/tecnico" element={<DashboardTecnico />} />
           </Route>
 
-          {/* Ruta Protegida: SOLO para ADMIN */}
+          {/* Ruta protegida: SOLO para ADMIN */}
           <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
             <Route path="/admin" element={<DashboardAdmin />} />
           </Route>
 
-          {/* Redirección automática si escriben cualquier otra ruta desconocida */}
+          {/* Redirección para rutas desconocidas */}
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>

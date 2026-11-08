@@ -22,3 +22,23 @@ export const loginUser = async (credentials) => {
     throw error;
   }
 };
+
+// Registrar nuevos usuarios CLIENTE o TECNICO
+export const registerUser = async (userData) => {
+  try {
+    const response = await api.post('/auth/register', {
+      email: userData.email.trim().toLowerCase(),
+      password: userData.password,
+      fullName: userData.fullName.trim(),
+      role: userData.role,
+      ...(userData.phone?.trim()
+        ? { phone: userData.phone.trim() }
+        : {}),
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error al registrar usuario:', error);
+    throw error;
+  }
+};
